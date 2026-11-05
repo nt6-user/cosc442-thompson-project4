@@ -245,4 +245,24 @@ class CoffeeMakerTest {
         assertTrue(coffeeMaker.addRecipe(unnamed));
     }
 
+        @Test
+    void addInventoryAcceptsZeroCoffee() {
+        assertTrue(coffeeMaker.addInventory(0, 1, 1, 1));
+    }
+
+    @Test
+    void addInventoryAcceptsZeroMilk() {
+        assertTrue(coffeeMaker.addInventory(1, 0, 1, 1));
+    }
+
+    @Test
+    void addInventoryAcceptsZeroSugar() {
+        assertTrue(coffeeMaker.addInventory(1, 1, 0, 1));
+    }
+
+    @Test
+    void addInventoryAcceptsZeroChocolate() {
+        assertTrue(coffeeMaker.addInventory(1, 1, 1, 0));
+    }
+
 }
