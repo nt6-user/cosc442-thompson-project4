@@ -17,14 +17,13 @@ class CoffeeMakerTest {
     @BeforeEach
     void setUp() {
         coffeeMaker = new CoffeeMaker();
-
         recipe = new Recipe();
         recipe.setName("Latte");
         recipe.setPrice(5);
         recipe.setAmtCoffee(2);
         recipe.setAmtMilk(3);
         recipe.setAmtSugar(1);
-        recipe.setAmtChocolate(0);
+        recipe.setAmtChocolate(2);
     }
 
     @Test
@@ -108,7 +107,21 @@ class CoffeeMakerTest {
 
     @Test
     void addInventoryAcceptsNonnegativeAmounts() {
-        assertTrue(coffeeMaker.addInventory(1, 1, 1, 1));
+        Inventory inventory = coffeeMaker.checkInventory();
+
+        int initialCoffee = inventory.getCoffee();
+        int initialMilk = inventory.getMilk();
+        int initialSugar = inventory.getSugar();
+        int initialChocolate = inventory.getChocolate();
+
+        assertTrue(coffeeMaker.addInventory(1, 2, 3, 4));
+
+        Inventory updatedInventory = coffeeMaker.checkInventory();
+
+        assertEquals(initialCoffee + 1, updatedInventory.getCoffee());
+        assertEquals(initialMilk + 2, updatedInventory.getMilk());
+        assertEquals(initialSugar + 3, updatedInventory.getSugar());
+        assertEquals(initialChocolate + 4, updatedInventory.getChocolate());
     }
 
     @Test
@@ -165,15 +178,17 @@ class CoffeeMakerTest {
     void makeCoffeeUsesIngredientsWhenSuccessful() {
         Inventory inventory = coffeeMaker.checkInventory();
 
+        int initialCoffee = inventory.getCoffee();
         int initialMilk = inventory.getMilk();
         int initialSugar = inventory.getSugar();
         int initialChocolate = inventory.getChocolate();
 
         coffeeMaker.makeCoffee(recipe, 5);
 
+        assertEquals(initialCoffee + 2, inventory.getCoffee());
         assertEquals(initialMilk - 3, inventory.getMilk());
         assertEquals(initialSugar - 1, inventory.getSugar());
-        assertEquals(initialChocolate, inventory.getChocolate());
+        assertEquals(initialChocolate - 2, inventory.getChocolate());
     }
 
     @Test
