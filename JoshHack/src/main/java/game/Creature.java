@@ -215,6 +215,7 @@ public class Creature {
 			world.remove(this);
 		}
 	}
+
 	
 	private void leaveCorpse(){
 		Item corpse = new Item('%', color, name + " corpse", null);
