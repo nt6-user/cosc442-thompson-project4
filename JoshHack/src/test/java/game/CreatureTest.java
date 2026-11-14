@@ -61,4 +61,17 @@ public class CreatureTest {
         assertEquals(0, creature.hp());
         assertEquals("test death", creature.causeOfDeath());
     }
+
+    @Test
+    void testModifyHpDeathLeavesCorpse() {
+        world.add(creature);
+        new CreatureAi(creature);
+
+        int amount = -100;
+
+        creature.modifyHp(amount, "test death");
+
+        assertEquals("josh corpse", world.item(1, 1, 0).name());
+    }
+
 }
