@@ -56,6 +56,36 @@ public class CombatRulesTest {
     }
 
     @Test
+    void testHealingImmediatelyBelowMaxHpDoesNotClamp() {
+        int currentHp = 79;
+        int amount = 20;
+
+        int result = CombatRules.calculateNewHp(currentHp, maxHp, amount);
+
+        assertEquals(99, result);
+    }
+
+    @Test
+    void testHealingExactlyAtMaxHpReturnsMaxHp() {
+        int currentHp = 79;
+        int amount = 21;
+
+        int result = CombatRules.calculateNewHp(currentHp, maxHp, amount);
+
+        assertEquals(100, result);
+    }
+
+    @Test
+    void testHealingImmediatelyAboveMaxHpIsCapped() {
+        int currentHp = 79;
+        int amount = 22;
+
+        int result = CombatRules.calculateNewHp(currentHp, maxHp, amount);
+
+        assertEquals(100, result);
+    }
+
+    @Test
     void testPositiveAmountExceedsMaxHp() {
         int currentHp = 90;
         int amount = 20;
