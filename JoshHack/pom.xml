@@ -79,6 +79,19 @@
                 </configuration>
             </plugin>
 
+            <!-- SpotBugs Static Analysis -->
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.9.8.2</version>
+                <configuration>
+                    <sarifOutput>true</sarifOutput>
+                    <sarifOutputDirectory>${project.build.directory}/spotbugs</sarifOutputDirectory>
+                    <sarifOutputFilename>spotbugs.sarif</sarifOutputFilename>
+                    <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 

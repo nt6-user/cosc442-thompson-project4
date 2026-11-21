@@ -10,6 +10,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
 
     steps:
       - name: Check out repository
@@ -33,6 +36,17 @@ jobs:
       - name: Run PIT mutation testing
         working-directory: ./JoshHack
         run: ./mvnw test-compile org.pitest:pitest-maven:mutationCoverage
+
+      - name: Run SpotBugs static analysis
+        working-directory: ./JoshHack
+        run: ./mvnw test-compile com.github.spotbugs:spotbugs-maven-plugin:spotbugs
+
+      - name: Upload SpotBugs SARIF to GitHub Code Scanning
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: JoshHack/target/spotbugs/spotbugs.sarif
+          category: spotbugs
 
       - name: Upload PIT report
         if: always()
