@@ -183,6 +183,15 @@ public class CreatureTest {
     }
 
     @Test
+    void testModifyManaStaysWithinZeroAndMaxMana() {
+        creature.modifyMana(-100);
+        assertEquals(0, creature.mana());
+
+        creature.modifyMana(100);
+        assertEquals(creature.maxMana(), creature.mana());
+    }
+
+    @Test
     void testModifyHpDamageWhileAlive() {
         int startingHp = creature.hp();
         int amount = -20;
